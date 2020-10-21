@@ -1,4 +1,4 @@
-export enum DayInWeek {
+enum DayInWeek {
   monday = 'monday',
   tuesday = 'tuesday',
   wednesday = 'wednesday',
@@ -8,7 +8,7 @@ export enum DayInWeek {
   sunday = 'sunday'
 }
 
-export enum OpeningType {
+enum OpeningType {
   open = 'open',
   close = 'close'
 }
@@ -23,10 +23,21 @@ type OpenHour = {
   value: number
 }
 
-export type OpeningHour = CloseHour | OpenHour
+type OpeningHour = CloseHour | OpenHour
 
 type OpeningHours = OpeningHour[]
 
-export type OpeningHoursInAWeek = {
+type OpeningHoursInAWeek = {
   [dayInWeek in DayInWeek]: OpeningHours
+}
+
+export {
+  DayInWeek,
+  OpeningType
+}
+
+export type {
+  OpeningHour,
+  OpeningHours,
+  OpeningHoursInAWeek
 }

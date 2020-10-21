@@ -1,6 +1,10 @@
 import { OpeningHoursInAWeek } from '../common/models/openingHours'
-import openingHoursData from './data.json'
+import openingHoursByDays from './data.json'
 
-export const getOpeningHoursData = (): OpeningHoursInAWeek => {
-  return openingHoursData
+export const getOpeningHoursByDays = () => {
+  if (typeof openingHoursByDays !== 'object') {
+    throw new Error('Unexpected swap request response, not an object')
+  } else {
+    return openingHoursByDays as OpeningHoursInAWeek
+  }
 }

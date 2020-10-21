@@ -73,4 +73,4 @@ const getOpeningHoursStringFromSeconds = (seconds: number): string => {
   return openingHours
 }
 
-export { convertSecondsToHours, getOpeningHoursStringFromSeconds }
+export { getOpeningHoursStringFromSeconds }

@@ -3,8 +3,8 @@ import {
   HOUR_IN_SECONDS,
   MAX_SECONDS_VALUE,
   MINUTE_IN_SECONDS,
-} from '../../common/constants'
-import { Meridiem } from '../../common/typings/timeCalculationTypes'
+} from '../../../common/constants'
+import { Meridiem } from '../../../common/typings/timeCalculationTypes'
 
 const convertSecondsToHours = (seconds: number): number => {
   return seconds / HOUR_IN_SECONDS
@@ -54,7 +54,7 @@ const getOpeningHoursTemplate = (
   }
 }
 
-const getOpeningHoursStringFromSeconds = (seconds: number): string => {
+const getHoursStringFromSeconds = (seconds: number): string => {
   const invalidSecondsInput = seconds < 0 || seconds > MAX_SECONDS_VALUE
   if (invalidSecondsInput) {
     return 'invalid seconds input'
@@ -73,4 +73,4 @@ const getOpeningHoursStringFromSeconds = (seconds: number): string => {
   return openingHours
 }
 
-export { getOpeningHoursStringFromSeconds }
+export { getHoursStringFromSeconds }

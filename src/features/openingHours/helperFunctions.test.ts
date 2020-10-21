@@ -1,6 +1,16 @@
 import { getOpeningHoursStringFromSeconds } from './helperFunctions'
 
 describe('secondsToMeridiemString', () => {
+  it('should return invalid message when seconds is less than 0', () => {
+    const result = getOpeningHoursStringFromSeconds(-999)
+    expect(result).toBe('invalid seconds input')
+  })
+
+  it('should return invalid message when seconds is more than 86399 (max value of seconds in one day)', () => {
+    const result = getOpeningHoursStringFromSeconds(90000)
+    expect(result).toBe('invalid seconds input')
+  })
+
   it('should return 1 AM when second = 3600', () => {
     const result = getOpeningHoursStringFromSeconds(3600)
     expect(result).toEqual('1 AM')

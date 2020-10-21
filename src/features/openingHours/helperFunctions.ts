@@ -1,5 +1,9 @@
 import moment from 'moment'
-import { HOUR_IN_SECONDS, MINUTE_IN_SECONDS } from '../../common/constants'
+import {
+  HOUR_IN_SECONDS,
+  MAX_SECONDS_VALUE,
+  MINUTE_IN_SECONDS,
+} from '../../common/constants'
 import { Meridiem } from '../../common/typings/timeCalculationTypes'
 
 const convertSecondsToHours = (seconds: number): number => {
@@ -51,6 +55,10 @@ const getOpeningHoursTemplate = (
 }
 
 const getOpeningHoursStringFromSeconds = (seconds: number): string => {
+  const invalidSecondsInput = seconds < 0 || seconds > MAX_SECONDS_VALUE
+  if (invalidSecondsInput) {
+    return 'invalid seconds input'
+  }
   const hours = convertSecondsToHours(seconds)
   const formattedHours = convertTo12HoursTimeStr(hours)
   const minutesPart = convertSecondsToMinutesPart(seconds)

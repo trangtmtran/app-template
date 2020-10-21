@@ -1,9 +1,8 @@
 import moment from 'moment'
+import { HOUR_IN_SECONDS, MINUTE_IN_SECONDS } from '../../common/constants'
+import { Meridiem } from '../../common/typings/timeCalculationTypes'
 
-const HOUR_IN_SECONDS = 3600
-const MINUTE_IN_SECONDS = 60
-
-const secondsToHours = (seconds: number): number => {
+const convertSecondsToHours = (seconds: number): number => {
   return seconds / HOUR_IN_SECONDS
 }
 
@@ -11,21 +10,26 @@ const getMinutesRemainderInSeconds = (seconds: number): number => {
   return seconds % HOUR_IN_SECONDS
 }
 
-const secondsToMinutesPart = (seconds: number): number => {
+const convertSecondsToMinutesPart = (seconds: number): number => {
   const minutesRemainderInSeconds = getMinutesRemainderInSeconds(seconds)
   const minutes = minutesRemainderInSeconds / MINUTE_IN_SECONDS
   const minutesQuotient = Math.floor(minutes)
   return minutesQuotient
 }
 
-const secondsToSecondsPart = (seconds: number): number => {
+const convertSecondsToSecondsPart = (seconds: number): number => {
   const minutesRemainderInSeconds = getMinutesRemainderInSeconds(seconds)
   const secondsRemainder = minutesRemainderInSeconds % MINUTE_IN_SECONDS
   return secondsRemainder
 }
 
-const formattedHoursTo12HoursTime = (hours: number): string => {
+const convertTo12HoursTimeStr = (hours: number): string => {
   return moment(hours, 'hour').format('h')
+}
+
+const getMeridiemStringFromHours = (hours: number): Meridiem => {
+  const meridiem = hours >= 12 ? Meridiem.PM : Meridiem.AM
+  return meridiem
 }
 
 const getOpeningHoursTemplate = (
@@ -46,12 +50,12 @@ const getOpeningHoursTemplate = (
   }
 }
 
-const secondsToMeridiemTimeString = (seconds: number): string => {
-  const hours = secondsToHours(seconds)
-  const formattedHours = formattedHoursTo12HoursTime(hours)
-  const minutesPart = secondsToMinutesPart(seconds)
-  const secondsPart = secondsToSecondsPart(seconds)
-  const meridiem = hours >= 12 ? 'PM' : 'AM'
+const getOpeningHoursStringFromSeconds = (seconds: number): string => {
+  const hours = convertSecondsToHours(seconds)
+  const formattedHours = convertTo12HoursTimeStr(hours)
+  const minutesPart = convertSecondsToMinutesPart(seconds)
+  const secondsPart = convertSecondsToSecondsPart(seconds)
+  const meridiem = getMeridiemStringFromHours(hours)
   const openingHours = getOpeningHoursTemplate(
     formattedHours,
     minutesPart,
@@ -61,4 +65,4 @@ const secondsToMeridiemTimeString = (seconds: number): string => {
   return openingHours
 }
 
-export { secondsToHours, secondsToMeridiemTimeString }
+export { convertSecondsToHours, getOpeningHoursStringFromSeconds }

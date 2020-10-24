@@ -5,39 +5,38 @@ enum DayInWeek {
   thursday = 'thursday',
   friday = 'friday',
   saturday = 'saturday',
-  sunday = 'sunday'
+  sunday = 'sunday',
 }
 
 enum OpeningType {
   open = 'open',
-  close = 'close'
+  close = 'close',
 }
 
 type CloseHour = {
-  type: OpeningType.close | string, //TODO: FIXME
+  type: OpeningType.close
   value: number
 }
 
 type OpenHour = {
-  type: OpeningType.open | string, //TODO: FIXME
+  type: OpeningType.open
   value: number
 }
 
+type ClosedDay = []
+
 type OpeningHour = CloseHour | OpenHour
 
-type OpeningHours = OpeningHour[]
+type OpeningHours = OpeningHour[] | ClosedDay
 
-type OpeningHoursInAWeek = {
+type OpeningHoursByDays = {
   [dayInWeek in DayInWeek]: OpeningHours
 }
 
-export {
-  DayInWeek,
-  OpeningType
+interface OpeningHoursInASingleDay {
+  weekDay: DayInWeek
+  openingHours: OpeningHours
 }
 
-export type {
-  OpeningHour,
-  OpeningHours,
-  OpeningHoursInAWeek
-}
+export { DayInWeek, OpeningType }
+export type { OpeningHour, OpeningHours, OpeningHoursByDays, OpeningHoursInASingleDay }

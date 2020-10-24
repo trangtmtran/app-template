@@ -1,22 +1,103 @@
-import { OpeningHoursInAWeek } from '../../../common/models/openingHours'
+import {
+  OpeningHoursInASingleDay,
+  OpeningHoursStringInASingleDay,
+  OpeningType,
+} from '../../../common/models/openingHours'
+import { getHoursStringFromSeconds } from './getHoursString'
+import { splitArrayIntoChunks } from './helperFunctions'
 
-const getOpeningHoursDurations = (openingHours: OpeningHoursInAWeek): any => {
-  // TODO: Fix output types
-  // should take in the whole object
-  // then output with this format:
-  // {
-  //    monday: ['10 AM - 10 PM', '11 PM - 2 AM'],
-  //    tuesday: 'Close' ...
-  // }
+const addTransitionCloseTime = (
+  openingHoursInAWeek: OpeningHoursInASingleDay[]
+): OpeningHoursInASingleDay[] => {
+  const openingHoursInAWeekWithAddedTransitionCloseTime = openingHoursInAWeek.map(
+    (openingHoursInADay, index) => {
+      const { openingHours } = openingHoursInADay
+      const lastItem = openingHours[openingHours.length - 1]
+      const isLastTimeOpenTime = lastItem
+        ? lastItem.type === OpeningType.open
+        : false
+      if (isLastTimeOpenTime) {
+        const isSunday = index === 6
+        const nextDay = isSunday
+          ? openingHoursInAWeek[0]
+          : openingHoursInAWeek[index + 1]
+        const closeTime = nextDay.openingHours[0]
+        return {
+          ...openingHoursInADay,
+          openingHours: [...openingHoursInADay.openingHours, closeTime],
+        }
+      }
+      return openingHoursInADay
+    }
+  )
+  return openingHoursInAWeekWithAddedTransitionCloseTime
+}
 
-  // sort by day in week --> no need
+const removeFirstCloseTime = (
+  addedTransitionCloseTime: OpeningHoursInASingleDay[]
+): OpeningHoursInASingleDay[] => {
+  const removedFirstCloseTime = addedTransitionCloseTime.map(
+    (openingHoursInADay) => {
+      const { openingHours } = openingHoursInADay
+      const firstItem = openingHours[0]
+      const isFirstItemCloseTime = firstItem
+        ? firstItem.type === OpeningType.close
+        : false
+      if (isFirstItemCloseTime) {
+        const openingHoursWithoutFirstItemAsCloseTime = openingHours.filter(
+          (openingHour) => openingHour !== firstItem
+        )
+        return {
+          ...openingHoursInADay,
+          openingHours: openingHoursWithoutFirstItemAsCloseTime,
+        }
+      }
+      return openingHoursInADay
+    }
+  )
+  return removedFirstCloseTime
+}
 
-  // return if is closed
+const convertToOpeningHoursString = (
+  removedFirstCloseTime: OpeningHoursInASingleDay[]
+): OpeningHoursStringInASingleDay[] => {
+  const convertedToOpeningHoursString = removedFirstCloseTime.map(
+    (openingHoursInADay) => {
+      const { openingHours } = openingHoursInADay
 
-  // return array of opening hours durations
+      if (openingHours.length === 0) {
+        return { ...openingHoursInADay, openingHours: ['CLOSED'] }
+      } else {
+        const groupedOpenAndCloseTime = splitArrayIntoChunks(openingHours, 2)
+        const durations = groupedOpenAndCloseTime.map((pair) => {
+          const [open, close] = pair
+          if (open === undefined || close === undefined) {
+            return 'missing info' // TODO: should we print this or just silently fail
+          }
+          const openTimeString = getHoursStringFromSeconds(open.value)
+          const closeTimeString = getHoursStringFromSeconds(close.value)
+          return `${openTimeString} - ${closeTimeString}`
+        })
+        return { ...openingHoursInADay, openingHours: durations }
+      }
+    }
+  )
 
+  return convertedToOpeningHoursString
+}
 
-  console.log(openingHours)
+const getOpeningHoursDurations = (
+  openingHoursInAWeek: OpeningHoursInASingleDay[] | null
+): OpeningHoursStringInASingleDay[] | null => {
+  if (openingHoursInAWeek === null) {
+    return null
+  }
+
+  const addedTransitionCloseTime = addTransitionCloseTime(openingHoursInAWeek)
+  const removedFirstCloseTime = removeFirstCloseTime(addedTransitionCloseTime)
+  const openingHoursString = convertToOpeningHoursString(removedFirstCloseTime)
+
+  return openingHoursString
 }
 
 export { getOpeningHoursDurations }

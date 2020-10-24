@@ -1,4 +1,4 @@
-enum DayInWeek {
+enum DayOfWeek {
   monday = 'monday',
   tuesday = 'tuesday',
   wednesday = 'wednesday',
@@ -23,20 +23,32 @@ type OpenHour = {
   value: number
 }
 
-type ClosedDay = []
-
 type OpeningHour = CloseHour | OpenHour
 
-type OpeningHours = OpeningHour[] | ClosedDay
+type WorkingDay = OpeningHour[]
+const ClosedDay: OpeningHour[] = []
+
+type OpeningHours = WorkingDay | typeof ClosedDay
 
 type OpeningHoursByDays = {
-  [dayInWeek in DayInWeek]: OpeningHours
+  [dayInWeek in DayOfWeek]: OpeningHours
 }
 
 interface OpeningHoursInASingleDay {
-  weekDay: DayInWeek
+  weekDay: DayOfWeek
   openingHours: OpeningHours
 }
 
-export { DayInWeek, OpeningType }
-export type { OpeningHour, OpeningHours, OpeningHoursByDays, OpeningHoursInASingleDay }
+interface OpeningHoursStringInASingleDay {
+  weekDay: DayOfWeek
+  openingHours: string[]
+}
+
+export { DayOfWeek, OpeningType }
+export type {
+  OpeningHour,
+  OpeningHours,
+  OpeningHoursByDays,
+  OpeningHoursInASingleDay,
+  OpeningHoursStringInASingleDay
+}

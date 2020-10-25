@@ -1,6 +1,6 @@
 import React from 'react'
 import { getOpeningHoursInAWeek } from '../../../server/server'
-import { getOpeningHoursDurations } from '../utils/getOpeningHoursDuration'
+import { getOpeningHoursDurations } from '../utils/getOpeningHoursDurations'
 
 const OpeningHours: React.FC = () => {
   const openingHoursInAWeek = getOpeningHoursInAWeek()

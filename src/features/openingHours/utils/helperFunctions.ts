@@ -1,3 +1,5 @@
+import { DayOfWeek } from "../../../common/models/openingHours"
+
 function splitArrayIntoChunks<T>(array: T[], chunkSize: number): T[][] {
   const newArray = []
   const arrayLength = array.length
@@ -6,4 +8,8 @@ function splitArrayIntoChunks<T>(array: T[], chunkSize: number): T[][] {
   return newArray
 }
 
-export { splitArrayIntoChunks }
+const isToday = (todayString: DayOfWeek, dayOfWeek: DayOfWeek): boolean => {
+  return todayString === dayOfWeek
+}
+
+export { splitArrayIntoChunks, isToday }

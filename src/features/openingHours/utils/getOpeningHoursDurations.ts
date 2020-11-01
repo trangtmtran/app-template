@@ -69,8 +69,8 @@ const convertToOpeningHoursString = (
         return { ...openingHoursInADay, openingHours: ['CLOSED'] }
       } else {
         const groupedOpenAndCloseTime = splitArrayIntoChunks(openingHours, 2)
-        const durations = groupedOpenAndCloseTime.map((pair) => {
-          const [open, close] = pair
+        const durations = groupedOpenAndCloseTime.map((openAndClosePair) => {
+          const [open, close] = openAndClosePair
           if (open === undefined || close === undefined) {
             return 'missing info' // TODO: should we print this or just silently fail
           }

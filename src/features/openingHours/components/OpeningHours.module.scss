@@ -1,0 +1,64 @@
+@import '../../variables.scss';
+
+.root {
+  margin: 3rem;
+  width: 300px;
+  height: fit-content;
+  box-shadow: 1px 1px 5px $grey3;
+  padding: 2rem;
+  border-radius: 10px;
+  background-color: $white;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid $black;
+  padding-bottom: 1rem;
+
+  .icon {
+    color: $grey3;
+  }
+
+  .title {
+    font-size: $font-size-lg;
+    font-weight: 700;
+    margin-left: 1rem;
+  }
+}
+
+.day {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid $grey2;
+
+  .dayOfWeek {
+    text-transform: capitalize;
+    font-size: $font-size-md;
+    font-weight: 700;
+    line-height: 22px;
+  }
+
+  .openingHours {
+    text-align: right;
+    text-transform: capitalize;
+  }
+
+  .closedDay {
+    color: $grey3;
+    text-transform: lowercase;
+    &:first-letter {
+      text-transform: uppercase; 
+    }
+  }
+
+  .today {
+    color: $green;
+    text-transform: uppercase;
+    margin-left: 0.75rem;
+    font-size: $font-size-sm;
+    font-weight: 700;
+  }
+}

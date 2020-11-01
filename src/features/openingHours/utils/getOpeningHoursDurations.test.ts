@@ -1,4 +1,5 @@
-import { DayOfWeek, OpeningType } from '../../../common/models/openingHours'
+import { CLOSED, MISSING_INFO } from '../../../common/constants'
+import { DayOfWeek, OpeningType } from '../../../common/typings/apiTypes'
 import { getOpeningHoursDurations } from './getOpeningHoursDurations'
 
 describe('getOpeningHoursDurations', () => {
@@ -15,13 +16,13 @@ describe('getOpeningHoursDurations', () => {
 
     const result = getOpeningHoursDurations(testData)
     const expectedResult = [
-      { weekDay: DayOfWeek.monday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.tuesday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.wednesday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.thursday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.friday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.saturday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.sunday, openingHours: ['CLOSED'] },
+      { weekDay: DayOfWeek.monday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.tuesday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.wednesday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.thursday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.friday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.saturday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.sunday, openingHours: [CLOSED] },
     ]
 
     expect(result).toEqual(expectedResult)
@@ -43,13 +44,13 @@ describe('getOpeningHoursDurations', () => {
 
     const result = getOpeningHoursDurations(testData)
     const expectedResult = [
-      { weekDay: DayOfWeek.monday, openingHours: ['missing info'] },
-      { weekDay: DayOfWeek.tuesday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.wednesday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.thursday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.friday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.saturday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.sunday, openingHours: ['CLOSED'] },
+      { weekDay: DayOfWeek.monday, openingHours: [MISSING_INFO] },
+      { weekDay: DayOfWeek.tuesday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.wednesday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.thursday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.friday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.saturday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.sunday, openingHours: [CLOSED] },
     ]
 
     expect(result).toEqual(expectedResult)
@@ -75,12 +76,12 @@ describe('getOpeningHoursDurations', () => {
     const result = getOpeningHoursDurations(testData)
     const expectedResult = [
       { weekDay: DayOfWeek.monday, openingHours: ['11:20 PM - 1 AM'] },
-      { weekDay: DayOfWeek.tuesday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.wednesday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.thursday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.friday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.saturday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.sunday, openingHours: ['CLOSED'] },
+      { weekDay: DayOfWeek.tuesday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.wednesday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.thursday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.friday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.saturday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.sunday, openingHours: [CLOSED] },
     ]
 
     expect(result).toEqual(expectedResult)
@@ -113,11 +114,11 @@ describe('getOpeningHoursDurations', () => {
     const expectedResult = [
       { weekDay: DayOfWeek.monday, openingHours: ['11:20 PM - 1 AM'] },
       { weekDay: DayOfWeek.tuesday, openingHours: ['10 AM - 1 AM'] },
-      { weekDay: DayOfWeek.wednesday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.thursday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.friday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.saturday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.sunday, openingHours: ['CLOSED'] },
+      { weekDay: DayOfWeek.wednesday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.thursday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.friday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.saturday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.sunday, openingHours: [CLOSED] },
     ]
 
     expect(result).toEqual(expectedResult)
@@ -142,12 +143,12 @@ describe('getOpeningHoursDurations', () => {
 
     const result = getOpeningHoursDurations(testData)
     const expectedResult = [
-      { weekDay: DayOfWeek.monday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.tuesday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.wednesday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.thursday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.friday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.saturday, openingHours: ['CLOSED'] },
+      { weekDay: DayOfWeek.monday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.tuesday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.wednesday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.thursday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.friday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.saturday, openingHours: [CLOSED] },
       { weekDay: DayOfWeek.sunday, openingHours: ['11 PM - 1 AM'] },
     ]
 
@@ -183,7 +184,7 @@ describe('getOpeningHoursDurations', () => {
 
     const result = getOpeningHoursDurations(testData)
     const expectedResult = [
-      { weekDay: DayOfWeek.monday, openingHours: ['CLOSED'] },
+      { weekDay: DayOfWeek.monday, openingHours: [CLOSED] },
       {
         weekDay: DayOfWeek.tuesday,
         openingHours: [
@@ -192,10 +193,10 @@ describe('getOpeningHoursDurations', () => {
           '6:53:20 PM - 10:20 PM',
         ],
       },
-      { weekDay: DayOfWeek.wednesday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.thursday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.friday, openingHours: ['CLOSED'] },
-      { weekDay: DayOfWeek.saturday, openingHours: ['CLOSED'] },
+      { weekDay: DayOfWeek.wednesday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.thursday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.friday, openingHours: [CLOSED] },
+      { weekDay: DayOfWeek.saturday, openingHours: [CLOSED] },
       { weekDay: DayOfWeek.sunday, openingHours: ['11 PM - 1 AM'] },
     ]
 

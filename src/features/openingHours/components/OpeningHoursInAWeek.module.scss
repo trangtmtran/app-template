@@ -1,0 +1,24 @@
+@import '../../variables.scss';
+
+.root {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid $grey2;
+
+  .dayOfWeek {
+    text-transform: capitalize;
+    font-size: $font-size-md;
+    font-weight: 700;
+    line-height: 22px;
+  }
+
+  .today {
+    color: $green;
+    text-transform: uppercase;
+    margin-left: 0.75rem;
+    font-size: $font-size-sm;
+    font-weight: 700;
+  }
+}

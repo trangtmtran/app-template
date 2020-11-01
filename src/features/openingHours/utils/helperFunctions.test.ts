@@ -1,4 +1,4 @@
-import { DayOfWeek } from '../../../common/models/openingHours'
+import { DayOfWeek } from '../../../common/typings/apiTypes'
 import { isToday, splitArrayIntoChunks } from './helperFunctions'
 
 describe('splitArrayIntoChunks', () => {

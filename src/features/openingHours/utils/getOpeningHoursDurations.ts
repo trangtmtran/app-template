@@ -1,10 +1,23 @@
+import { CLOSED, MISSING_INFO } from '../../../common/constants'
+import { OpeningHoursStringInASingleDay } from '../../../common/models/openingHours'
 import {
   OpeningHoursInASingleDay,
-  OpeningHoursStringInASingleDay,
   OpeningType,
-} from '../../../common/models/openingHours'
+} from '../../../common/typings/apiTypes'
 import { getHoursStringFromSeconds } from './getHoursString'
 import { splitArrayIntoChunks } from './helperFunctions'
+
+const getTransitionCloseTime = (
+  currentIndex: number,
+  openingHoursInAWeek: OpeningHoursInASingleDay[]
+) => {
+  const monday = openingHoursInAWeek[0]
+  const isSunday = currentIndex === 6
+  const nextDay = isSunday ? monday : openingHoursInAWeek[currentIndex + 1]
+  const closeTime = nextDay.openingHours[0]
+
+  return closeTime
+}
 
 const addTransitionCloseTime = (
   openingHoursInAWeek: OpeningHoursInASingleDay[]
@@ -17,11 +30,7 @@ const addTransitionCloseTime = (
         ? lastItem.type === OpeningType.open
         : false
       if (isLastTimeOpenTime) {
-        const isSunday = index === 6
-        const nextDay = isSunday
-          ? openingHoursInAWeek[0]
-          : openingHoursInAWeek[index + 1]
-        const closeTime = nextDay.openingHours[0]
+        const closeTime = getTransitionCloseTime(index, openingHoursInAWeek)
         return {
           ...openingHoursInADay,
           openingHours: [...openingHoursInADay.openingHours, closeTime],
@@ -66,13 +75,13 @@ const convertToOpeningHoursString = (
       const { openingHours } = openingHoursInADay
 
       if (openingHours.length === 0) {
-        return { ...openingHoursInADay, openingHours: ['CLOSED'] }
+        return { ...openingHoursInADay, openingHours: [CLOSED] }
       } else {
         const groupedOpenAndCloseTime = splitArrayIntoChunks(openingHours, 2)
         const durations = groupedOpenAndCloseTime.map((openAndClosePair) => {
           const [open, close] = openAndClosePair
           if (open === undefined || close === undefined) {
-            return 'missing info' // TODO: should we print this or just silently fail
+            return MISSING_INFO
           }
           const openTimeString = getHoursStringFromSeconds(open.value)
           const closeTimeString = getHoursStringFromSeconds(close.value)

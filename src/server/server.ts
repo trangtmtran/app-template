@@ -1,8 +1,9 @@
+import { NUMBER_OF_DAYS_IN_A_WEEK } from '../common/constants'
 import {
   DayOfWeek,
   OpeningHoursByDays,
   OpeningHoursInASingleDay,
-} from '../common/models/openingHours'
+} from '../common/typings/apiTypes'
 import openingHoursByDays from './data.json'
 
 export const getOpeningHoursInAWeek = (): OpeningHoursInASingleDay[] | null => {
@@ -10,7 +11,7 @@ export const getOpeningHoursInAWeek = (): OpeningHoursInASingleDay[] | null => {
     throw new Error('Unexpected swap request response, not an object')
   } else {
     const filteredAndSortedOpeningHours = filterAndSortOpeningHours(
-      openingHoursByDays as OpeningHoursByDays
+      (openingHoursByDays as unknown) as OpeningHoursByDays
     )
     return filteredAndSortedOpeningHours
   }
@@ -38,7 +39,7 @@ const getOpeningHoursIn7Days = (
       openingHour !== null && openingHour.hasOwnProperty('weekDay')
   )
 
-  if (openingHoursIn7Days.length !== 7) {
+  if (openingHoursIn7Days.length !== NUMBER_OF_DAYS_IN_A_WEEK) {
     return null
   }
 

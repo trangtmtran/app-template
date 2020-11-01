@@ -1,0 +1,10 @@
+@import '../../variables.scss';
+
+.openingHours {
+  text-align: right;
+  text-transform: capitalize;
+}
+
+.closedDay {
+  color: $grey3;
+}

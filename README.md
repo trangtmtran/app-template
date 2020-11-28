@@ -1,4 +1,4 @@
-# OPENING HOURS
+# APP TEMPLATE
 
 ## Development setup
 
